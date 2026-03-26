@@ -1,0 +1,657 @@
+@use "@/styles/variables" as *;
+
+.page {
+  min-height: 100vh;
+  background: radial-gradient(1200px 600px at 15% 10%, rgba(124,58,237,0.35), transparent 60%),
+              linear-gradient(180deg, #070A12, #0B1020 40%, #070A12);
+  color: $color-text;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+}
+
+:global {
+  @keyframes danmaku-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(calc(-100% - 100vw)); }
+  }
+}
+
+// ── Header ──
+.header {
+  @include sticky-header;
+}
+
+.headerInner {
+  width: min(1280px, 95vw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.headerBack {
+  color: $color-text;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.headerId {
+  margin-left: 16px;
+  color: $color-muted;
+  font-size: 13px;
+}
+
+// ── Layout ──
+.layout {
+  width: min(1280px, 95vw);
+  margin: 0 auto;
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ── Video player ──
+.playerWrap {
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  position: relative;
+  cursor: pointer;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.danmakuLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.danmakuItem {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.endOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quizBtn {
+  padding: 12px 32px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  background: linear-gradient(135deg, $color-brand, #9333EA);
+  color: #fff;
+  cursor: pointer;
+}
+
+// ── Controls overlay ──
+.controls {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  padding: 24px 14px 10px;
+  transition: opacity 0.3s;
+
+  @include mobile {
+    padding: 10px 8px 6px;
+  }
+}
+
+.progressRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+
+  @include mobile {
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+}
+
+.timeLabel {
+  font-size: 12px;
+  color: rgba(255,255,255,0.8);
+  min-width: 36px;
+  text-align: center;
+}
+
+.progressTrack {
+  flex: 1;
+  height: 6px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+
+  @include mobile {
+    height: 4px;
+    // 扩大触控区域但不增加视觉高度
+    &::before {
+      content: '';
+      position: absolute;
+      top: -18px;
+      bottom: -18px;
+      left: 0;
+      right: 0;
+    }
+  }
+}
+
+.progressFill {
+  height: 100%;
+  background: $color-brand;
+  border-radius: 3px;
+}
+
+.progressThumb {
+  position: absolute;
+  top: -4px;
+  transform: translateX(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: $color-brand;
+  border: 2px solid #fff;
+}
+
+.btnRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @include mobile { gap: 6px; }
+}
+
+.ctrlBtn {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+  &:disabled { color: rgba(255,255,255,0.35); cursor: default; }
+
+  @include mobile {
+    min-width: 40px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255,255,255,0.2);
+
+  @include mobile { display: none; }
+}
+
+.speedWrap { position: relative; }
+
+.speedBtn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 6px;
+  padding: 3px 10px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+
+  @include mobile {
+    min-height: 40px;
+    padding: 8px 12px;
+  }
+}
+
+.speedMenu {
+  position: absolute;
+  bottom: 110%;
+  left: 0;
+  background: rgba(0,0,0,0.9);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.speedItem {
+  padding: 6px 18px;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(255,255,255,0.7);
+
+  &.active {
+    background: rgba(124,58,237,0.25);
+    color: #fff;
+  }
+}
+
+.volumeIcon { font-size: 16px; @include mobile { display: none; } }
+
+.volumeSlider {
+  width: 80px;
+  accent-color: $color-brand;
+
+  @include mobile { display: none; }
+}
+
+.danmakuToggle {
+  border: none;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.5);
+
+  &.on {
+    background: rgba(124,58,237,0.3);
+    color: #fff;
+  }
+
+  @include mobile {
+    min-height: 40px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.danmakuSelect {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  border-radius: 6px;
+  padding: 2px 4px;
+  color: #fff;
+  font-size: 12px;
+
+  @include mobile { display: none; }
+}
+
+// ── Danmaku send bar ──
+.danmakuSend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+
+  @include mobile {
+    gap: 4px;
+    margin-top: 4px;
+  }
+}
+
+.colorDot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+
+  &.active { border-color: #fff; }
+
+  @include mobile {
+    // 视觉保持小圆点，但用 padding 撑大触控区域
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    margin: 4px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      bottom: -8px;
+      left: -8px;
+      right: -8px;
+    }
+  }
+}
+
+.danmakuInput {
+  flex: 1;
+  min-width: 0;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: #fff;
+  font-size: 13px;
+  outline: none;
+
+  @include mobile {
+    min-height: 40px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}
+
+.sendBtn {
+  background: linear-gradient(135deg, $color-brand, #9333EA);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  @include mobile {
+    min-height: 40px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+}
+
+// ── Mini progress bar ──
+.miniProgress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.15);
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.miniProgressFill {
+  height: 100%;
+  background: $color-brand;
+  transition: width 0.3s linear;
+}
+
+// ── Mobile episode bar ──
+.mobileEpBar {
+  display: none;
+  margin-top: 10px;
+  position: relative;
+  z-index: 100;
+
+  @include mobile { display: block; }
+}
+
+.mobileEpToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: $color-panel;
+  border: 1px solid $color-border;
+  cursor: pointer;
+
+  &.open {
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+  }
+}
+
+.mobileEpTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mobileEpName {
+  font-size: 13px;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.mobileEpCount {
+  font-size: 11px;
+  color: $color-faint;
+}
+
+.mobileEpArrow {
+  font-size: 12px;
+  color: $color-muted;
+}
+
+.mobileEpList {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 100;
+  max-height: 240px;
+  overflow-y: auto;
+  background: rgba(11, 16, 32, 0.97);
+  border: 1px solid $color-border;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.mobileEpItem {
+  padding: 9px 14px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+
+  &.active {
+    background: rgba(124,58,237,0.15);
+    border-left-color: $color-brand;
+  }
+}
+
+.mobileEpItemTitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-muted;
+
+  .active & {
+    font-weight: 700;
+    color: $color-text;
+  }
+}
+
+.mobileEpItemMeta {
+  font-size: 11px;
+  color: $color-faint;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.statusTag {
+  font-size: 10px;
+  padding: 0 5px;
+  border-radius: 3px;
+
+  &.quizPassed {
+    background: rgba(124,58,237,0.25);
+    color: #A78BFA;
+  }
+  &.watched {
+    background: rgba(34,197,94,0.2);
+    color: #4ADE80;
+  }
+  &.unwatched {
+    background: rgba(255,255,255,0.06);
+    color: $color-faint;
+  }
+}
+
+// ── Episode info ──
+.epInfo {
+  position: relative;
+  z-index: 1;
+  margin-top: 12px;
+
+  h2 { font-size: 18px; font-weight: 700; margin: 0; }
+  p { font-size: 13px; color: $color-muted; margin: 6px 0 0; }
+}
+
+// ── Tab bar ──
+.tabSection { position: relative; z-index: 1; margin-top: 24px; }
+
+.tabBar {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid $color-border;
+  margin-bottom: 16px;
+}
+
+.tabBtn {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 400;
+  color: $color-muted;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &.active {
+    font-weight: 700;
+    color: $color-text;
+    border-bottom-color: $color-brand;
+  }
+
+  @include mobile { padding: 8px 14px; font-size: 13px; }
+}
+
+// ── Comment input ──
+.commentInputRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+
+  @include mobile { flex-direction: column; }
+}
+
+.commentAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(124,58,237,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.commentInput {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: $color-text;
+  font-size: 13px;
+  outline: none;
+}
+
+.commentSubmitBtn {
+  background: linear-gradient(135deg, $color-brand, #9333EA);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+// ── Episode sidebar ──
+.sidebar {
+  background: $color-panel;
+  border-radius: 12px;
+  border: 1px solid $color-border;
+  padding: 12px 0;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+
+  @include mobile { display: none; }
+}
+
+.sidebarTitle {
+  padding: 0 14px 10px;
+  font-weight: 700;
+  font-size: 15px;
+  border-bottom: 1px solid $color-border;
+}
+
+.sidebarItem {
+  padding: 10px 14px;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+  transition: background 0.15s;
+
+  &.active {
+    background: rgba(124,58,237,0.15);
+    border-left-color: $color-brand;
+  }
+}
+
+.sidebarItemTitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: $color-muted;
+
+  .active & {
+    font-weight: 700;
+    color: $color-text;
+  }
+}
+
+.sidebarItemMeta {
+  font-size: 12px;
+  color: $color-faint;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sidebarStatusTag {
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+
+  &.quizPassed {
+    background: rgba(124,58,237,0.25);
+    color: #A78BFA;
+  }
+  &.watched {
+    background: rgba(34,197,94,0.2);
+    color: #4ADE80;
+  }
+  &.unwatched {
+    background: rgba(255,255,255,0.06);
+    color: $color-faint;
+  }
+}

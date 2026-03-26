@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "首页",
+    "courses": "在线课程",
+    "login": "登录",
+    "logout": "退出登录",
+    "back": "返回",
+    "backToHome": "← 返回首页",
+    "submit": "提交",
+    "cancel": "取消",
+    "save": "保存",
+    "send": "发送",
+    "langSwitch": "EN"
+  },
+  "login": {
+    "title": "登录",
+    "subtitle": "输入任意用户名和密码即可登录",
+    "usernamePlaceholder": "用户名",
+    "passwordPlaceholder": "密码",
+    "submitBtn": "登录",
+    "backToHome": "← 返回首页"
+  },
+  "courses": {
+    "pageTitle": "在线课程",
+    "notLoggedInTitle": "请先登录",
+    "notLoggedInDesc": "登录后即可查看全部在线课程",
+    "goLogin": "去登录",
+    "backToHome": "← 返回首页",
+    "headerLogo": "← Aiden 实战训练",
+    "tabs": {
+      "poker": "扑克教程",
+      "baccarat": "百家乐",
+      "dice": "骰子"
+    },
+    "instructor": "讲师",
+    "totalDuration": "总时长",
+    "students": "学习人数",
+    "subscribers": "订阅人数",
+    "updated": "更新"
+  },
+  "player": {
+    "backToCourses": "← 返回课程列表",
+    "courseId": "课程ID",
+    "directory": "课程目录",
+    "episodes": "集",
+    "selectEpisode": "选集",
+    "collapse": "收起",
+    "duration": "时长",
+    "quizPassed": "已做题",
+    "watched": "已看完",
+    "unwatched": "未学习",
+    "goQuiz": "去做题",
+    "danmakuOn": "弹幕开",
+    "danmakuOff": "弹幕关",
+    "danmakuPlaceholder": "发条弹幕...",
+    "speedSlow": "慢速",
+    "speedMedium": "中速",
+    "speedFast": "快速",
+    "densitySparse": "稀疏",
+    "densityMedium": "适中",
+    "densityDense": "密集",
+    "tabComment": "评论",
+    "tabNotes": "笔记",
+    "tabExercise": "练习",
+    "commentPlaceholder": "写条评论...",
+    "commentSubmit": "发表",
+    "justNow": "刚刚",
+    "me": "我"
+  },
+  "quiz": {
+    "title": "课后练习",
+    "wrongAnswer": "回答错误，请重新选择",
+    "later": "稍后再做",
+    "submit": "提交答案"
+  },
+  "notes": {
+    "addNote": "+ 添加笔记（当前时间点）",
+    "timePoint": "时间点",
+    "markdownSupport": "支持 Markdown 语法",
+    "placeholder": "在这里写笔记，支持 Markdown...",
+    "empty": "暂无笔记，点击上方按钮添加"
+  },
+  "exercise": {
+    "questionPrefix": "第",
+    "questionSuffix": "题",
+    "answerPlaceholder": "在此输入你的答案...",
+    "submit": "提交答案",
+    "submitted": "✓ 已提交"
+  },
+  "comment": {
+    "reply": "回复",
+    "collapseReplies": "收起回复",
+    "repliesCount": "条回复",
+    "replyPlaceholder": "回复..."
+  }
+}

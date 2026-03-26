@@ -1,0 +1,116 @@
+@use "@/styles/variables" as *;
+
+.addBtn {
+  margin-bottom: 16px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  border: 1px solid $color-border;
+  background: rgba(255,255,255,0.04);
+  color: $color-text;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.editor {
+  margin-bottom: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  border: 1px solid $color-border;
+  padding: 14px;
+
+  @include mobile {
+    textarea { min-height: 90px; }
+  }
+}
+
+.editorHint {
+  font-size: 12px;
+  color: $color-faint;
+  margin-bottom: 8px;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid $color-border;
+  border-radius: 8px;
+  padding: 10px;
+  color: $color-text;
+  font-size: 13px;
+  outline: none;
+  resize: vertical;
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+.editorActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cancelBtn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: 1px solid $color-border;
+  background: transparent;
+  color: $color-muted;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.saveBtn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  border: none;
+  background: linear-gradient(135deg, $color-brand, #9333EA);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.empty {
+  color: $color-faint;
+  font-size: 13px;
+}
+
+.card {
+  margin-bottom: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid $color-border;
+
+  @include mobile {
+    padding: 10px;
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.timeTag {
+  font-size: 12px;
+  color: $color-brand;
+  cursor: pointer;
+  background: rgba(124,58,237,0.12);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.dateTag {
+  font-size: 11px;
+  color: $color-faint;
+}
+
+.cardContent {
+  font-size: 13px;
+  color: $color-muted;
+  line-height: 1.7;
+}

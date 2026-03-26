@@ -1,0 +1,96 @@
+{
+  "common": {
+    "home": "Home",
+    "courses": "Courses",
+    "login": "Login",
+    "logout": "Logout",
+    "back": "Back",
+    "backToHome": "← Back to Home",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "send": "Send",
+    "langSwitch": "中文"
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Enter any username and password to log in",
+    "usernamePlaceholder": "Username",
+    "passwordPlaceholder": "Password",
+    "submitBtn": "Login",
+    "backToHome": "← Back to Home"
+  },
+  "courses": {
+    "pageTitle": "Online Courses",
+    "notLoggedInTitle": "Please Login First",
+    "notLoggedInDesc": "Login to access all online courses",
+    "goLogin": "Go to Login",
+    "backToHome": "← Back to Home",
+    "headerLogo": "← Aiden Training",
+    "tabs": {
+      "poker": "Poker",
+      "baccarat": "Baccarat",
+      "dice": "Dice"
+    },
+    "instructor": "Instructor",
+    "totalDuration": "Duration",
+    "students": "Students",
+    "subscribers": "Subscribers",
+    "updated": "Updated"
+  },
+  "player": {
+    "backToCourses": "← Back to Courses",
+    "courseId": "Course ID",
+    "directory": "Course Directory",
+    "episodes": "episodes",
+    "selectEpisode": "Episodes",
+    "collapse": "Collapse",
+    "duration": "Duration",
+    "quizPassed": "Quiz Done",
+    "watched": "Watched",
+    "unwatched": "Not Started",
+    "goQuiz": "Take Quiz",
+    "danmakuOn": "Danmaku ON",
+    "danmakuOff": "Danmaku OFF",
+    "danmakuPlaceholder": "Send a danmaku...",
+    "speedSlow": "Slow",
+    "speedMedium": "Medium",
+    "speedFast": "Fast",
+    "densitySparse": "Sparse",
+    "densityMedium": "Medium",
+    "densityDense": "Dense",
+    "tabComment": "Comments",
+    "tabNotes": "Notes",
+    "tabExercise": "Exercises",
+    "commentPlaceholder": "Write a comment...",
+    "commentSubmit": "Post",
+    "justNow": "Just now",
+    "me": "Me"
+  },
+  "quiz": {
+    "title": "Quiz",
+    "wrongAnswer": "Wrong answer, please try again",
+    "later": "Later",
+    "submit": "Submit"
+  },
+  "notes": {
+    "addNote": "+ Add Note (at current time)",
+    "timePoint": "Time",
+    "markdownSupport": "Markdown supported",
+    "placeholder": "Write your notes here, Markdown supported...",
+    "empty": "No notes yet. Click the button above to add one."
+  },
+  "exercise": {
+    "questionPrefix": "Q",
+    "questionSuffix": "",
+    "answerPlaceholder": "Enter your answer here...",
+    "submit": "Submit",
+    "submitted": "✓ Submitted"
+  },
+  "comment": {
+    "reply": "Reply",
+    "collapseReplies": "Collapse",
+    "repliesCount": "replies",
+    "replyPlaceholder": "Reply..."
+  }
+}
