@@ -197,7 +197,7 @@ export default function HomeZh() {
         </section>
 
         {/* ── 真实案例 ── */}
-        {/* <section id="cases" className={s.section}>
+        <section id="cases" className={s.section}>
           <div className={s.container}>
             <div className={s.sectionHeader}>
               <div>
@@ -217,7 +217,7 @@ export default function HomeZh() {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
 
         {/* ── 课程与保障 ── */}
         <section id="features" className={s.section}>
