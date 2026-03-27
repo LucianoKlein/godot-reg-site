@@ -59,7 +59,6 @@ export default function HomeEn() {
     <div className={s.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD_ORG) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD_COURSES) }} />
-
       <header className={s.nav}>
         <div className={s.container}>
           <div className={s.navInner}>
@@ -81,7 +80,6 @@ export default function HomeEn() {
           </div>
         </div>
       </header>
-
       <main>
         {/* ── Hero ── */}
         <section className={s.hero}>
