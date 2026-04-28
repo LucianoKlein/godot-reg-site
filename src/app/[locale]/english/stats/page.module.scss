@@ -1,0 +1,72 @@
+@use "@/styles/variables" as *;
+
+.page { @include page-base; padding: 20px; }
+.header { max-width: 900px; margin: 0 auto 32px; }
+.backBtn { @include btn; margin-bottom: 16px; &:hover { background: rgba(255,255,255,0.08); } }
+.title { font-size: 28px; font-weight: 700; margin: 0; }
+
+.main { max-width: 900px; margin: 0 auto; }
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+  @include mobile { grid-template-columns: repeat(2, 1fr); }
+}
+.statCard {
+  @include panel;
+  padding: 24px 16px;
+  text-align: center;
+}
+.statValue { font-size: 32px; font-weight: 700; color: $color-text; }
+.statUnit { font-size: 14px; font-weight: 400; color: $color-muted; }
+.statLabel { font-size: 13px; color: $color-faint; margin-top: 6px; }
+
+.section { @include panel; padding: 24px; margin-bottom: 20px; }
+.sectionTitle { font-size: 18px; font-weight: 600; margin: 0 0 20px; }
+
+.trendTable { width: 100%; }
+.trendHeader {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-faint;
+  border-bottom: 1px solid $color-border;
+}
+.trendRow {
+  display: grid;
+  grid-template-columns: 120px 1fr 1fr;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  &:last-child { border-bottom: none; }
+}
+.trendDate { font-size: 13px; color: $color-muted; }
+.trendVal {
+  font-size: 14px;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.barSpell {
+  display: inline-block;
+  height: 6px;
+  border-radius: 3px;
+  background: $color-brand;
+  min-width: 2px;
+}
+.barRead {
+  display: inline-block;
+  height: 6px;
+  border-radius: 3px;
+  background: $color-brand2;
+  min-width: 2px;
+}
+
+.noData { text-align: center; padding: 40px 20px; color: $color-faint; font-size: 15px; }

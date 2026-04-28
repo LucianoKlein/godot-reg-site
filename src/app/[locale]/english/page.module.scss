@@ -1,0 +1,66 @@
+@use "@/styles/variables" as *;
+
+.page {
+  @include page-base;
+  padding: 20px;
+}
+
+.header {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+}
+
+.backBtn {
+  @include btn;
+  margin-bottom: 20px;
+  &:hover {
+    background: rgba(255,255,255,0.08);
+  }
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  @include panel;
+  padding: 40px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+  &:hover {
+    background: $color-panel2;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(124,58,237,0.15);
+  }
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-size: 18px;
+  font-weight: 600;
+  color: $color-text;
+}

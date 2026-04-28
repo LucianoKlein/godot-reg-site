@@ -76,6 +76,8 @@ export default function HomeZh() {
               <a href="#cases" className={s.navLink}>真实案例</a>
               <a href="#faq" className={s.navLink}>常见问题</a>
               <a href="/zh/courses" className={`${s.btn} ${s.btnGreen}`}>在线课程</a>
+              <a href="/zh/quiz" className={`${s.btn} ${s.btnGreen}`}>刷题训练</a>
+              <a href="/zh/english" className={`${s.btn} ${s.btnGreen}`}>英语学习</a>
               <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>立即咨询</a>
             </nav>
           </div>
@@ -101,6 +103,7 @@ export default function HomeZh() {
                 </p>
                 <div className={s.heroActions}>
                   <a href="/zh/courses" className={`${s.btn} ${s.btnGreen}`}>免费试看课程</a>
+                  <a href="/zh/quiz" className={`${s.btn} ${s.btnGreen}`}>刷题训练</a>
                   <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>立即咨询</a>
                   <a href="#cases" className={s.btn}>查看真实案例</a>
                 </div>
@@ -287,6 +290,8 @@ export default function HomeZh() {
                 <div className={s.footerContact}>联系：请在此处填写公众号/微信号/邮箱/电话</div>
                 <div className={s.footerLinks}>
                   <a href="/zh/courses" className={s.footerLink}>在线课程</a>
+                  <span className={s.footerSep}>|</span>
+                  <a href="/zh/quiz" className={s.footerLink}>刷题训练</a>
                   <span className={s.footerSep}>|</span>
                   <a href="#consult" className={s.footerLink}>咨询通道</a>
                   <span className={s.footerSep}>|</span>

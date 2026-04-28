@@ -1,0 +1,52 @@
+@use "@/styles/variables" as *;
+
+.page { @include page-base; padding: 20px; }
+.header { max-width: 900px; margin: 0 auto 32px; }
+.backBtn { @include btn; margin-bottom: 16px; &:hover { background: rgba(255,255,255,0.08); } }
+.title { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
+.subtitle { color: $color-muted; font-size: 15px; margin: 0; }
+.loading { text-align: center; padding: 60px 20px; color: $color-muted; }
+
+.main { max-width: 900px; margin: 0 auto; }
+.sectionTitle { font-size: 20px; font-weight: 600; margin: 0 0 16px; }
+
+.wordList { display: flex; flex-direction: column; gap: 12px; }
+.wordCard { @include panel; overflow: hidden; }
+.wordHeader {
+  padding: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  &:hover { background: $color-panel2; }
+  @include mobile { flex-direction: column; align-items: flex-start; }
+}
+.wordMain { display: flex; align-items: baseline; gap: 12px; }
+.wordText { font-size: 20px; font-weight: 600; color: $color-text; }
+.wordPhonetic { font-size: 14px; color: $color-brand; font-family: monospace; }
+.wordTranslation { font-size: 15px; color: $color-muted; }
+
+.wordDetails {
+  border-top: 1px solid $color-border;
+  padding: 20px;
+  background: rgba(0,0,0,0.15);
+}
+.examplesSection { margin-bottom: 16px; }
+.examplesTitle { font-size: 14px; font-weight: 600; color: $color-faint; margin-bottom: 12px; text-transform: uppercase; }
+.example {
+  padding: 12px;
+  background: $color-panel;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  &:last-child { margin-bottom: 0; }
+}
+.exampleText { font-size: 14px; color: $color-text; margin-bottom: 4px; }
+.exampleTranslation { font-size: 13px; color: $color-muted; }
+.noExamples { font-size: 13px; color: $color-faint; font-style: italic; }
+
+.wrongBookBtn {
+  @include btn;
+  width: 100%;
+  &:hover { @include btn-primary; }
+}

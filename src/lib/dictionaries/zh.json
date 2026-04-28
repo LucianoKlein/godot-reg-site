@@ -92,5 +92,119 @@
     "collapseReplies": "收起回复",
     "repliesCount": "条回复",
     "replyPlaceholder": "回复..."
+  },
+  "english": {
+    "pageTitle": "英语学习",
+    "backToHome": "← 返回首页",
+    "tabs": {
+      "units": "单元学习",
+      "missions": "任务挑战",
+      "stats": "学习统计",
+      "teachers": "教师团队",
+      "history": "学习记录"
+    },
+    "units": {
+      "title": "单元学习",
+      "subtitle": "系统化学习英语单词和句子",
+      "bookTitle": "教材",
+      "unitCount": "个单元",
+      "wordCount": "个单词",
+      "startLearning": "开始学习",
+      "continue": "继续学习",
+      "completed": "已完成"
+    },
+    "unitDetail": {
+      "backToUnits": "← 返回单元列表",
+      "wordList": "单词列表",
+      "practiceNow": "立即练习",
+      "addToWrongBook": "加入错题本",
+      "removeFromWrongBook": "移出错题本",
+      "phonetic": "音标",
+      "translation": "翻译",
+      "examples": "例句",
+      "noExamples": "暂无例句"
+    },
+    "missions": {
+      "title": "任务挑战",
+      "subtitle": "通过文章朗读提升口语能力",
+      "articleCount": "篇文章",
+      "difficulty": "难度",
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难",
+      "progress": "进度",
+      "requiredCount": "需完成",
+      "times": "次"
+    },
+    "articleDetail": {
+      "backToMissions": "← 返回任务列表",
+      "articleContent": "文章内容",
+      "translation": "译文",
+      "relatedWords": "相关单词",
+      "startReading": "开始朗读",
+      "recordAgain": "重新录制",
+      "submitRecording": "提交录音",
+      "recording": "录音中...",
+      "recordingTime": "录音时长",
+      "playback": "播放录音",
+      "stopPlayback": "停止播放"
+    },
+    "stats": {
+      "title": "学习统计",
+      "todayPractice": "今日练习",
+      "totalPractice": "累计练习",
+      "streak": "连续打卡",
+      "days": "天",
+      "completedUnits": "完成单元",
+      "units": "个",
+      "leaderboard": "排行榜",
+      "rank": "排名",
+      "practiceCount": "练习次数",
+      "recentCourses": "最近课程",
+      "lastPractice": "最后练习",
+      "practiceHeatmap": "练习热力图",
+      "practiceTrend": "练习趋势",
+      "spellMinutes": "拼写时长（分钟）",
+      "readMinutes": "朗读时长（分钟）"
+    },
+    "teachers": {
+      "title": "教师团队",
+      "subtitle": "专业的英语教师为您提供指导",
+      "university": "毕业院校",
+      "degree": "学位",
+      "title": "职称",
+      "specialties": "专长",
+      "rating": "评分",
+      "students": "学生数"
+    },
+    "history": {
+      "title": "学习记录",
+      "subtitle": "查看您的录音评测历史",
+      "sentence": "句子",
+      "submitTime": "提交时间",
+      "status": "状态",
+      "pending": "评测中",
+      "completed": "已完成",
+      "teacher": "评测教师",
+      "viewReport": "查看报告",
+      "totalScore": "总分",
+      "accuracy": "准确度",
+      "fluency": "流利度",
+      "completeness": "完整度",
+      "wordDetails": "逐词分析",
+      "word": "单词",
+      "score": "得分",
+      "errorType": "错误类型",
+      "mispronounced": "发音错误",
+      "missed": "遗漏",
+      "unexpected": "多余",
+      "correct": "正确"
+    },
+    "wrongBook": {
+      "title": "错题本",
+      "empty": "错题本为空",
+      "clear": "清空错题本",
+      "confirmClear": "确定要清空错题本吗？"
+    }
   }
 }

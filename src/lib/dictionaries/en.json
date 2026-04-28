@@ -92,5 +92,119 @@
     "collapseReplies": "Collapse",
     "repliesCount": "replies",
     "replyPlaceholder": "Reply..."
+  },
+  "english": {
+    "pageTitle": "English Learning",
+    "backToHome": "← Back to Home",
+    "tabs": {
+      "units": "Units",
+      "missions": "Missions",
+      "stats": "Stats",
+      "teachers": "Teachers",
+      "history": "History"
+    },
+    "units": {
+      "title": "Unit Learning",
+      "subtitle": "Systematically learn English words and sentences",
+      "bookTitle": "Textbook",
+      "unitCount": "units",
+      "wordCount": "words",
+      "startLearning": "Start Learning",
+      "continue": "Continue",
+      "completed": "Completed"
+    },
+    "unitDetail": {
+      "backToUnits": "← Back to Units",
+      "wordList": "Word List",
+      "practiceNow": "Practice Now",
+      "addToWrongBook": "Add to Wrong Book",
+      "removeFromWrongBook": "Remove from Wrong Book",
+      "phonetic": "Phonetic",
+      "translation": "Translation",
+      "examples": "Examples",
+      "noExamples": "No examples yet"
+    },
+    "missions": {
+      "title": "Missions",
+      "subtitle": "Improve speaking skills through article reading",
+      "articleCount": "articles",
+      "difficulty": "Difficulty",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "progress": "Progress",
+      "requiredCount": "Required",
+      "times": "times"
+    },
+    "articleDetail": {
+      "backToMissions": "← Back to Missions",
+      "articleContent": "Article Content",
+      "translation": "Translation",
+      "relatedWords": "Related Words",
+      "startReading": "Start Reading",
+      "recordAgain": "Record Again",
+      "submitRecording": "Submit Recording",
+      "recording": "Recording...",
+      "recordingTime": "Duration",
+      "playback": "Play Recording",
+      "stopPlayback": "Stop"
+    },
+    "stats": {
+      "title": "Learning Stats",
+      "todayPractice": "Today",
+      "totalPractice": "Total",
+      "streak": "Streak",
+      "days": "days",
+      "completedUnits": "Completed Units",
+      "units": "",
+      "leaderboard": "Leaderboard",
+      "rank": "Rank",
+      "practiceCount": "Practice Count",
+      "recentCourses": "Recent Courses",
+      "lastPractice": "Last Practice",
+      "practiceHeatmap": "Practice Heatmap",
+      "practiceTrend": "Practice Trend",
+      "spellMinutes": "Spelling (min)",
+      "readMinutes": "Reading (min)"
+    },
+    "teachers": {
+      "title": "Teachers",
+      "subtitle": "Professional English teachers to guide you",
+      "university": "University",
+      "degree": "Degree",
+      "title": "Title",
+      "specialties": "Specialties",
+      "rating": "Rating",
+      "students": "Students"
+    },
+    "history": {
+      "title": "History",
+      "subtitle": "View your recording evaluation history",
+      "sentence": "Sentence",
+      "submitTime": "Submitted",
+      "status": "Status",
+      "pending": "Evaluating",
+      "completed": "Completed",
+      "teacher": "Teacher",
+      "viewReport": "View Report",
+      "totalScore": "Total Score",
+      "accuracy": "Accuracy",
+      "fluency": "Fluency",
+      "completeness": "Completeness",
+      "wordDetails": "Word Analysis",
+      "word": "Word",
+      "score": "Score",
+      "errorType": "Error Type",
+      "mispronounced": "Mispronounced",
+      "missed": "Missed",
+      "unexpected": "Unexpected",
+      "correct": "Correct"
+    },
+    "wrongBook": {
+      "title": "Wrong Book",
+      "empty": "Wrong book is empty",
+      "clear": "Clear All",
+      "confirmClear": "Are you sure you want to clear the wrong book?"
+    }
   }
 }

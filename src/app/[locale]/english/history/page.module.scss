@@ -1,0 +1,91 @@
+@use "@/styles/variables" as *;
+
+.page { @include page-base; padding: 20px; }
+.header { max-width: 900px; margin: 0 auto 32px; }
+.backBtn { @include btn; margin-bottom: 16px; &:hover { background: rgba(255,255,255,0.08); } }
+.title { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
+.subtitle { color: $color-muted; font-size: 15px; margin: 0; }
+
+.main { max-width: 900px; margin: 0 auto; }
+.list { display: flex; flex-direction: column; gap: 16px; }
+
+.card { @include panel; overflow: hidden; }
+.cardHeader {
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  @include mobile { flex-direction: column; }
+}
+.cardLeft { flex: 1; }
+.sentenceText { font-size: 16px; font-weight: 600; color: $color-text; margin-bottom: 8px; }
+.cardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: $color-faint;
+}
+.cardRight { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.statusBadge {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+.statusCompleted { color: $color-brand2; background: rgba(34,197,94,0.12); }
+.statusPending { color: $color-warn; background: rgba(245,158,11,0.12); }
+
+.reportBtn {
+  @include btn;
+  font-size: 13px;
+  padding: 6px 12px;
+  &:hover { @include btn-primary; }
+}
+
+.report {
+  border-top: 1px solid $color-border;
+  padding: 24px;
+  background: rgba(0,0,0,0.15);
+}
+
+.scoreGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+  @include mobile { grid-template-columns: repeat(2, 1fr); }
+}
+.scoreItem { text-align: center; }
+.scoreValue { font-size: 28px; font-weight: 700; }
+.scoreLabel { font-size: 13px; color: $color-faint; margin-top: 4px; }
+
+.wordSection { }
+.wordSectionTitle { font-size: 15px; font-weight: 600; color: $color-faint; margin: 0 0 12px; text-transform: uppercase; }
+
+.wordTable { width: 100%; }
+.wordTableHeader {
+  display: grid;
+  grid-template-columns: 1fr 80px 120px;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-faint;
+  border-bottom: 1px solid $color-border;
+}
+.wordTableRow {
+  display: grid;
+  grid-template-columns: 1fr 80px 120px;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  &:last-child { border-bottom: none; }
+}
+.wordText { font-weight: 500; color: $color-text; }
+.errorTag { color: #EF4444; font-size: 13px; }
+.correctTag { color: $color-brand2; font-size: 13px; }
+
+.empty { text-align: center; padding: 60px 20px; color: $color-faint; font-size: 16px; }

@@ -1,0 +1,27 @@
+@use "@/styles/variables" as *;
+
+.page { @include page-base; padding: 20px; }
+.header { max-width: 800px; margin: 0 auto 24px; h1 { font-size: 28px; font-weight: 700; } }
+
+.main { max-width: 800px; margin: 0 auto; }
+
+.section { @include panel; padding: 24px; margin-bottom: 20px; }
+.sectionTitle { font-size: 16px; font-weight: 600; color: $color-faint; margin: 0 0 16px; text-transform: uppercase; }
+
+.userInfo { display: flex; flex-direction: column; gap: 12px; }
+.infoRow { display: flex; align-items: center; gap: 12px; }
+.label { font-size: 14px; color: $color-muted; min-width: 80px; }
+.value { font-size: 16px; color: $color-text; font-weight: 500; }
+
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.statCard { background: rgba(0,0,0,0.2); border: 1px solid $color-border; border-radius: 10px; padding: 16px; text-align: center; }
+.statValue { font-size: 28px; font-weight: 700; color: $color-brand; }
+.statLabel { font-size: 13px; color: $color-muted; margin-top: 4px; }
+
+.linkGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.linkCard { @include btn; display: block; text-align: center; padding: 16px; border-radius: 10px; &:hover { background: rgba(124,58,237,0.1); border-color: rgba(124,58,237,0.3); } }
+
+.logoutBtn { @include btn; width: 100%; padding: 14px; color: #ef4444; border-color: rgba(239,68,68,0.3); margin-top: 12px; &:hover { background: rgba(239,68,68,0.1); } }
+
+.notLoggedIn { text-align: center; padding: 80px 20px; h2 { font-size: 24px; margin-bottom: 12px; } p { color: $color-muted; margin-bottom: 24px; } }
+.loginBtn { @include btn-primary; padding: 12px 32px; display: inline-block; }

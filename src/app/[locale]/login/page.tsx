@@ -16,11 +16,33 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent) => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!username.trim()) return;
-    localStorage.setItem("user", JSON.stringify({ username }));
-    router.push(`/${locale}/courses`);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+      if (!res.ok) {
+        setError(locale === "zh" ? "用户名或密码错误" : "Invalid username or password");
+        return;
+      }
+      const data = await res.json();
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("token", data.access_token);
+      router.push(`/${locale}/courses`);
+    } catch {
+      setError(locale === "zh" ? "网络错误" : "Network error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,7 +53,8 @@ export default function LoginPage() {
         <form onSubmit={handleLogin} className={s.form}>
           <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t.usernamePlaceholder} className={s.input} />
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t.passwordPlaceholder} className={s.input} />
-          <button type="submit" className={s.submitBtn}>{t.submitBtn}</button>
+          {error && <div className={s.error}>{error}</div>}
+          <button type="submit" className={s.submitBtn} disabled={loading}>{loading ? "..." : t.submitBtn}</button>
         </form>
         <div className={s.backLink}>
           <a href={`/${locale}`}>{t.back}</a>

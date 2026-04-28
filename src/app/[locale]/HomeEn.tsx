@@ -75,6 +75,8 @@ export default function HomeEn() {
               <a href="#cases" className={s.navLink}>Case Studies</a>
               <a href="#faq" className={s.navLink}>FAQ</a>
               <a href="/en/courses" className={`${s.btn} ${s.btnGreen}`}>Courses</a>
+              <a href="/en/quiz" className={`${s.btn} ${s.btnGreen}`}>Quiz</a>
+              <a href="/en/english" className={`${s.btn} ${s.btnGreen}`}>English</a>
               <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>Contact Us</a>
             </nav>
           </div>
@@ -99,6 +101,7 @@ export default function HomeEn() {
                 </p>
                 <div className={s.heroActions}>
                   <a href="/en/courses" className={`${s.btn} ${s.btnGreen}`}>Try Courses Free</a>
+                  <a href="/en/quiz" className={`${s.btn} ${s.btnGreen}`}>Quiz Training</a>
                   <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>Contact Us</a>
                   <a href="#cases" className={s.btn}>View Case Studies</a>
                 </div>
@@ -285,6 +288,8 @@ export default function HomeEn() {
                 <div className={s.footerContact}>Contact: Please fill in your WeChat / Email / Phone here</div>
                 <div className={s.footerLinks}>
                   <a href="/en/courses" className={s.footerLink}>Courses</a>
+                  <span className={s.footerSep}>|</span>
+                  <a href="/en/quiz" className={s.footerLink}>Quiz</a>
                   <span className={s.footerSep}>|</span>
                   <a href="#consult" className={s.footerLink}>Contact</a>
                   <span className={s.footerSep}>|</span>
