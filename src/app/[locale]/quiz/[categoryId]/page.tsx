@@ -285,9 +285,9 @@ export default function QuizDetailPage() {
   if (loading) {
     return (
       <div className={s.page}>
-        <header className={s.header}><div className={s.headerInner}>
+        <div className={s.header}><div className={s.headerInner}>
           <a href={`/${locale}/quiz`} className={s.headerLogo}>{t.back}</a>
-        </div></header>
+        </div></div>
         <div className={s.container}><p style={{ textAlign: "center", padding: 40, color: "rgba(255,255,255,0.55)" }}>{t.loading}</p></div>
       </div>
     );
@@ -296,9 +296,9 @@ export default function QuizDetailPage() {
   if (questions.length === 0) {
     return (
       <div className={s.page}>
-        <header className={s.header}><div className={s.headerInner}>
+        <div className={s.header}><div className={s.headerInner}>
           <a href={`/${locale}/quiz`} className={s.headerLogo}>{t.back}</a>
-        </div></header>
+        </div></div>
         <div className={s.container}><p style={{ textAlign: "center", padding: 40, color: "rgba(255,255,255,0.55)" }}>{t.noQuestions}</p></div>
       </div>
     );
@@ -307,9 +307,9 @@ export default function QuizDetailPage() {
   if (finished) {
     return (
       <div className={s.page}>
-        <header className={s.header}><div className={s.headerInner}>
+        <div className={s.header}><div className={s.headerInner}>
           <a href={`/${locale}/quiz`} className={s.headerLogo}>{t.back}</a>
-        </div></header>
+        </div></div>
         <div className={s.container}>
           <div className={s.resultCard}>
             <div className={s.resultIcon}>{cat?.icon}</div>
@@ -330,12 +330,12 @@ export default function QuizDetailPage() {
 
   return (
     <div className={s.page}>
-      <header className={s.header}>
+      <div className={s.header}>
         <div className={s.headerInner}>
           <a href={`/${locale}/quiz`} className={s.headerLogo}>{t.back}</a>
           <span className={s.progress}>{current + 1} {t.of} {questions.length}</span>
         </div>
-      </header>
+      </div>
 
       <div className={s.container}>
         <div className={s.questionCard}>

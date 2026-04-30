@@ -91,17 +91,13 @@ export default function WrongBookPage() {
 
   return (
     <div className={s.page}>
-      <header className={s.header}>
-        <div className={s.headerInner}>
-          <a href={`/${locale}/quiz`} className={s.headerLogo}>{t.back}</a>
+      <div className={s.container}>
+        <div className={s.titleRow}>
+          <h1 className={s.h1}>{t.title}</h1>
           {items.length > 0 && (
             <button className={s.clearBtn} onClick={handleClear}>{t.clear}</button>
           )}
         </div>
-      </header>
-
-      <div className={s.container}>
-        <h1 className={s.h1}>{t.title}</h1>
 
         {items.length === 0 ? (
           <p className={s.empty}>{t.empty}</p>

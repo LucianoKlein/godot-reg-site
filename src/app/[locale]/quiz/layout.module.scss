@@ -1,0 +1,116 @@
+@use "@/styles/variables" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: $page-bg;
+  color: $color-text;
+  font-family: $font-stack;
+
+  @media (min-width: $bp-mobile) {
+    flex-direction: row;
+  }
+}
+
+.content {
+  flex: 1;
+  padding-bottom: 70px;
+
+  @media (min-width: $bp-mobile) {
+    padding-bottom: 0;
+    margin-left: 200px;
+  }
+}
+
+// ── PC 侧边栏 ──
+.sidebar {
+  display: none;
+
+  @media (min-width: $bp-mobile) {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    z-index: 100;
+    background: rgba(7, 10, 18, 0.95);
+    border-right: 1px solid $color-border;
+    padding: 32px 0 24px;
+    gap: 4px;
+  }
+}
+
+.sidebarTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-muted;
+  padding: 0 20px 20px;
+  letter-spacing: 0.5px;
+}
+
+.sideTab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: $color-faint;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    color: $color-text;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  &.active {
+    color: $color-brand;
+    border-left-color: $color-brand;
+    background: rgba(124, 58, 237, 0.08);
+  }
+}
+
+// ── 移动端底部 TabBar ──
+.tabBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 64px;
+  background: rgba(7, 10, 18, 0.92);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid $color-border;
+
+  @media (min-width: $bp-mobile) {
+    display: none;
+  }
+}
+
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  text-decoration: none;
+  color: $color-faint;
+  transition: color 0.2s;
+
+  &.active {
+    color: $color-brand;
+  }
+}
+
+.tabLabel {
+  font-size: 11px;
+  font-weight: 500;
+}

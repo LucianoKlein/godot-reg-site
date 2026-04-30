@@ -1,0 +1,36 @@
+@use "@/styles/variables" as *;
+
+.page { padding: 20px; }
+.header { max-width: 1200px; margin: 0 auto 24px; }
+.title { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
+.subtitle { color: $color-muted; font-size: 14px; margin: 0; }
+
+.main { max-width: 1200px; margin: 0 auto; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+
+  @media (min-width: $bp-mobile) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+.card {
+  @include panel;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+
+  &:hover {
+    border-color: rgba(124,58,237,0.45);
+    transform: translateY(-2px);
+  }
+}
+
+.cardIcon { font-size: 36px; margin-bottom: 12px; }
+.cardName { font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+.cardDesc { font-size: 12px; color: $color-faint; }

@@ -1,23 +1,23 @@
 @use "@/styles/variables" as *;
 
-.page { @include page-base; }
+.page { padding: 20px; }
 
-.header { @include sticky-header; }
-
-.headerInner {
-  width: min(1120px, 92vw);
+.container {
+  max-width: 1200px;
   margin: 0 auto;
+}
+
+.titleRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
+  margin-bottom: 24px;
 }
 
-.headerLogo {
-  color: $color-text;
-  text-decoration: none;
-  font-weight: 800;
-  font-size: 14px;
+.h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
 }
 
 .clearBtn {
@@ -28,20 +28,6 @@
   color: rgba(239,68,68,0.9);
   font-size: 13px;
   cursor: pointer;
-}
-
-.container {
-  width: min(900px, 92vw);
-  margin: 0 auto;
-  padding: 32px 0 56px;
-}
-
-.h1 {
-  font-size: 28px;
-  margin: 0 0 24px;
-  letter-spacing: -0.3px;
-
-  @include sm { font-size: 22px; }
 }
 
 .empty {

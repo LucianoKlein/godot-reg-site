@@ -1,12 +1,12 @@
 @use "@/styles/variables" as *;
 
-.page { @include page-base; }
+.page { padding: 20px; }
 
 .pageCenter {
-  @include page-base;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 80vh;
 }
 
 .notLoggedIn {
@@ -18,15 +18,19 @@
 .loginBtn { @include btn; @include btn-primary; padding: 10px 28px; }
 .backRow { margin-top: 16px; a { color: $color-faint; font-size: 13px; text-decoration: none; } }
 
-.header { @include sticky-header; }
-
-.headerInner {
-  width: min(1120px, 92vw);
-  margin: 0 auto;
+.header {
+  max-width: 720px;
+  margin: 0 auto 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 0;
+}
+
+.headerInner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .headerLogo {

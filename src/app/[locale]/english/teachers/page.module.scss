@@ -1,10 +1,9 @@
 @use "@/styles/variables" as *;
 
-.page { @include page-base; padding: 20px; }
+.page { padding: 20px; }
 .header { max-width: 1200px; margin: 0 auto 32px; }
-.backBtn { @include btn; margin-bottom: 16px; &:hover { background: rgba(255,255,255,0.08); } }
-.title { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
-.subtitle { color: $color-muted; font-size: 15px; margin: 0; }
+.title { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
+.subtitle { color: $color-muted; font-size: 14px; margin: 0; }
 
 .main { max-width: 1200px; margin: 0 auto; }
 

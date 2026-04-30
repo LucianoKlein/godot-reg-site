@@ -1,29 +1,41 @@
 @use "@/styles/variables" as *;
 
-.page { @include page-base; padding: 20px; }
-.header { max-width: 900px; margin: 0 auto 32px; }
-.backBtn { @include btn; margin-bottom: 16px; &:hover { background: rgba(255,255,255,0.08); } }
-.title { font-size: 28px; font-weight: 700; margin: 0 0 6px; }
-.subtitle { color: $color-muted; font-size: 15px; margin: 0; }
+.page { padding: 20px; }
+.header { max-width: 1200px; margin: 0 auto 24px; }
+.title { font-size: 24px; font-weight: 700; margin: 0 0 6px; }
+.subtitle { color: $color-muted; font-size: 14px; margin: 0; }
 
-.main { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.main { max-width: 1200px; margin: 0 auto; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: $bp-mobile) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (min-width: 1100px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 .card {
   @include panel;
   padding: 24px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
   text-decoration: none;
   transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
   &:hover { background: $color-panel2; transform: translateY(-2px); }
-  @include mobile { flex-direction: column; align-items: flex-start; }
 }
-.cardIcon { font-size: 36px; }
-.cardBody { flex: 1; }
-.cardTitle { font-size: 18px; font-weight: 600; color: $color-text; margin: 0 0 4px; }
-.cardDesc { font-size: 14px; color: $color-muted; margin: 0; }
-.cardMeta { display: flex; align-items: center; gap: 12px; }
+
+.cardIcon { font-size: 32px; margin-bottom: 12px; }
+.cardTitle { font-size: 17px; font-weight: 600; color: $color-text; margin: 0 0 6px; }
+.cardDesc { font-size: 13px; color: $color-muted; margin: 0 0 16px; flex: 1; }
+
+.cardFooter { display: flex; align-items: center; }
 .badge {
   font-size: 12px;
   color: $color-brand2;
@@ -31,4 +43,3 @@
   padding: 4px 10px;
   border-radius: 8px;
 }
-.arrow { color: $color-faint; font-size: 18px; }

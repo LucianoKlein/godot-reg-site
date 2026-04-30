@@ -1,0 +1,99 @@
+@use "@/styles/variables" as *;
+
+.page { padding: 20px; }
+
+.container { max-width: 800px; margin: 0 auto; }
+
+.title { font-size: 24px; font-weight: 700; margin: 0 0 20px; }
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid $color-border;
+  width: fit-content;
+}
+
+.tabBtn {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  color: $color-muted;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover { background: rgba(255,255,255,0.04); }
+}
+
+.tabActive {
+  background: rgba(124,58,237,0.15);
+  color: $color-brand;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: $color-panel;
+  border: 1px solid $color-border;
+  transition: border-color 0.2s;
+}
+
+.itemMe {
+  border-color: rgba(124,58,237,0.4);
+  background: rgba(124,58,237,0.06);
+}
+
+.rank {
+  width: 32px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-faint;
+  flex-shrink: 0;
+}
+
+.rankTop { font-size: 20px; }
+
+.avatar {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meTag {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(124,58,237,0.2);
+  color: $color-brand;
+  font-weight: 700;
+}
+
+.value {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-brand;
+  flex-shrink: 0;
+}

@@ -120,7 +120,6 @@ export default function HistoryPage() {
   return (
     <div className={s.page}>
       <header className={s.header}>
-        <Link href={`/${locale}/english`} className={s.backBtn}>{t.backToEnglish}</Link>
         <h1 className={s.title}>{t.title}</h1>
         <p className={s.subtitle}>{t.subtitle}</p>
       </header>
