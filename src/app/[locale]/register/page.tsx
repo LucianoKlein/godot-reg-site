@@ -1,37 +1,60 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import s from "./page.module.scss";
+import s from "../login/page.module.scss";
 
 const dict: Record<string, Record<string, string>> = {
-  zh: { title: "登录", subtitle: "输入用户名和密码登录", usernamePlaceholder: "用户名", passwordPlaceholder: "密码", submitBtn: "登录", back: "← 返回首页", noAccount: "没有账号？去注册" },
-  en: { title: "Login", subtitle: "Enter your username and password", usernamePlaceholder: "Username", passwordPlaceholder: "Password", submitBtn: "Login", back: "← Back to Home", noAccount: "No account? Register" },
+  zh: {
+    title: "注册",
+    subtitle: "创建账号，开始刷题之旅",
+    usernamePlaceholder: "用户名",
+    passwordPlaceholder: "密码",
+    emailPlaceholder: "邮箱（选填）",
+    submitBtn: "注册",
+    back: "← 返回首页",
+    hasAccount: "已有账号？去登录",
+    usernameTaken: "用户名已被注册",
+    networkError: "网络错误",
+  },
+  en: {
+    title: "Register",
+    subtitle: "Create an account to start practicing",
+    usernamePlaceholder: "Username",
+    passwordPlaceholder: "Password",
+    emailPlaceholder: "Email (optional)",
+    submitBtn: "Register",
+    back: "← Back to Home",
+    hasAccount: "Already have an account? Login",
+    usernameTaken: "Username already taken",
+    networkError: "Network error",
+  },
 };
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const params = useParams();
   const locale = (params.locale as string) || "zh";
   const t = dict[locale] || dict.zh;
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!username.trim()) return;
+    if (!username.trim() || !password.trim()) return;
     setLoading(true);
     setError("");
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, email: email || undefined }),
       });
       if (!res.ok) {
-        setError(locale === "zh" ? "用户名或密码错误" : "Invalid username or password");
+        const data = await res.json().catch(() => null);
+        setError(data?.detail === "Username already exists" ? t.usernameTaken : (data?.detail || t.networkError));
         return;
       }
       const data = await res.json();
@@ -39,7 +62,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.access_token);
       router.push(`/${locale}/quiz`);
     } catch {
-      setError(locale === "zh" ? "网络错误" : "Network error");
+      setError(t.networkError);
     } finally {
       setLoading(false);
     }
@@ -50,14 +73,15 @@ export default function LoginPage() {
       <div className={s.card}>
         <h1 className={s.title}>{t.title}</h1>
         <p className={s.subtitle}>{t.subtitle}</p>
-        <form onSubmit={handleLogin} className={s.form}>
+        <form onSubmit={handleRegister} className={s.form}>
           <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t.usernamePlaceholder} className={s.input} />
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t.passwordPlaceholder} className={s.input} />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t.emailPlaceholder} className={s.input} />
           {error && <div className={s.error}>{error}</div>}
           <button type="submit" className={s.submitBtn} disabled={loading}>{loading ? "..." : t.submitBtn}</button>
         </form>
         <div className={s.backLink}>
-          <a href={`/${locale}/register`}>{t.noAccount}</a>
+          <a href={`/${locale}/login`}>{t.hasAccount}</a>
         </div>
         <div className={s.backLink}>
           <a href={`/${locale}`}>{t.back}</a>

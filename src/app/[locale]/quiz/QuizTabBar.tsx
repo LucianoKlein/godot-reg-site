@@ -39,7 +39,7 @@ export default function QuizTabBar() {
     <>
       <nav className={s.sidebar}>
         <div className={s.sidebarTitle}>Quiz</div>
-        {links.map(({ tab, active, href }) => (
+        {links.filter(({ tab }) => tab.key !== "me").map(({ tab, active, href }) => (
           <Link key={tab.key || "home"} href={href} className={`${s.sideTab} ${active ? s.active : ""}`}>
             <tab.icon size={20} />
             <span>{locale === "en" ? tab.en : tab.zh}</span>

@@ -1,7 +1,23 @@
 "use client";
 import React, { useState, useEffect, useMemo } from "react";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { authPost, authFetch } from "@/lib/api";
+import AchievementToast from "@/components/AchievementToast";
+import confetti from "canvas-confetti";
 import s from "./page.module.scss";
+
+function QuizImage({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div className={s.imgWrap}>
+      {!loaded && <div className={s.imgSkeleton}><div className={s.imgPulse} /></div>}
+      <img
+        src={src} alt={alt} className={`${s.questionImage} ${loaded ? s.imgVisible : s.imgHidden}`}
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
+}
 
 interface Question {
   id: number;
@@ -105,12 +121,21 @@ export default function QuizDetailPage() {
   const [submitted, setSubmitted] = useState<Record<number, boolean>>({});
   const [finished, setFinished] = useState(false);
   const [corrected, setCorrected] = useState<Record<number, boolean>>({});
+  const [everWrong, setEverWrong] = useState<Set<number>>(new Set());
   const [showWrongModal, setShowWrongModal] = useState(false);
+  const [unlockedTitles, setUnlockedTitles] = useState<{ id: number; name_zh: string; name_en: string; icon: string; threshold: number }[]>([]);
+  const [wrongBookIds, setWrongBookIds] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     setMounted(true);
     const user = localStorage.getItem("user");
-    if (user) setLoggedIn(true);
+    if (user) {
+      setLoggedIn(true);
+      authFetch("/api/quiz/wrong")
+        .then(r => r.ok ? r.json() : [])
+        .then(data => { if (Array.isArray(data)) setWrongBookIds(new Set(data.map((d: any) => d.question_id))); })
+        .catch(() => {});
+    }
   }, []);
 
   useEffect(() => {
@@ -127,14 +152,27 @@ export default function QuizDetailPage() {
   useEffect(() => {
     if (!mounted || !loggedIn) return;
     if (isWrongMode) {
-      try {
-        const all = JSON.parse(localStorage.getItem("wrongQuestions") || "[]");
-        const filtered = categoryId === "wrong-all"
-          ? all
-          : all.filter((q: { categoryId: string }) => q.categoryId === categoryId);
-        setQuestions(filtered);
-      } catch { setQuestions([]); }
-      setLoading(false);
+      authFetch("/api/quiz/wrong")
+        .then(r => r.ok ? r.json() : [])
+        .then((data: { question_id: number; category_id: string; question: Record<string, unknown> | null }[]) => {
+          const filtered = categoryId === "wrong-all"
+            ? data
+            : data.filter(w => w.category_id === categoryId);
+          const mapped = filtered
+            .filter(w => w.question)
+            .map(w => ({
+              id: w.question!.id as number,
+              type: w.question!.type as Question["type"],
+              question: w.question!.question as string,
+              options: w.question!.options as string[] | undefined,
+              correctAnswer: w.question!.correct_answer as number | number[] | string,
+              explanation: w.question!.explanation as string,
+              imageUrls: w.question!.image_urls as string[] | undefined,
+            }));
+          setQuestions(mapped);
+          setLoading(false);
+        })
+        .catch(() => { setQuestions([]); setLoading(false); });
       return;
     }
     fetch(`/api/questions?category_id=${categoryId}&page_size=100&status=active`)
@@ -179,13 +217,28 @@ export default function QuizDetailPage() {
       const correct = checkAnswer(q, answers[current]);
       if (correct) {
         setCorrected({ ...corrected, [current]: true });
+        setTimeout(() => {
+          if (current < questions.length - 1) {
+            setCurrent(c => c + 1);
+          } else {
+            handleFinish();
+          }
+        }, 500);
       } else {
+        setEverWrong(prev => new Set(prev).add(q.id));
         saveWrongQuestion(q);
       }
     } else {
       const correct = checkAnswer(q, answers[current]);
       if (correct) {
         setCorrected({ ...corrected, [current]: true });
+        setTimeout(() => {
+          if (current < questions.length - 1) {
+            setCurrent(c => c + 1);
+          } else {
+            handleFinish();
+          }
+        }, 500);
       }
     }
   };
@@ -202,24 +255,8 @@ export default function QuizDetailPage() {
     return ans === question.correctAnswer;
   }
 
-  function saveWrongQuestion(question: Question) {
-    try {
-      const key = "wrongQuestions";
-      const existing = JSON.parse(localStorage.getItem(key) || "[]");
-      if (existing.some((w: { id: number }) => w.id === question.id)) return;
-      existing.push({
-        id: question.id,
-        categoryId,
-        type: question.type,
-        question: question.question,
-        options: question.options,
-        correctAnswer: question.correctAnswer,
-        explanation: question.explanation,
-        imageUrls: question.imageUrls,
-        addedAt: new Date().toISOString(),
-      });
-      localStorage.setItem(key, JSON.stringify(existing));
-    } catch {}
+  function saveWrongQuestion(_question: Question) {
+    // wrong questions are now submitted to API in handleFinish
   }
 
   const score = useMemo(() => {
@@ -233,28 +270,53 @@ export default function QuizDetailPage() {
 
   const wrongCount = questions.length - score;
 
-  const handleFinish = () => {
+  const submitToApi = async () => {
+    const wrongIds = Array.from(everWrong);
+    const mode = isWrongMode ? "wrong" : "category";
+    try {
+      const res = await authPost("/api/quiz/attempts", {
+        category_id: isWrongMode ? null : categoryId,
+        mode,
+        total_count: questions.length,
+        correct_count: score,
+        wrong_question_ids: wrongIds,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.unlocked_titles && data.unlocked_titles.length > 0) {
+          setUnlockedTitles(data.unlocked_titles);
+        }
+      }
+    } catch { /* ignore */ }
+  };
+
+  const fireConfetti = () => {
+    const end = Date.now() + 1500;
+    const frame = () => {
+      confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.6 } });
+      confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.6 } });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    };
+    frame();
+  };
+
+  const handleFinish = async () => {
+    const realWrongCount = questions.filter((q, i) => !checkAnswer(q, answers[i])).length;
+    await submitToApi();
     if (isWrongMode) {
-      removeCorrectFromWrongBook();
       setFinished(true);
       return;
     }
-    if (wrongCount > 0) {
+    if (realWrongCount > 0) {
       setShowWrongModal(true);
     } else {
       setFinished(true);
+      setTimeout(fireConfetti, 100);
     }
   };
 
   function removeCorrectFromWrongBook() {
-    try {
-      const all = JSON.parse(localStorage.getItem("wrongQuestions") || "[]");
-      const correctIds = questions
-        .filter((q, i) => checkAnswer(q, answers[i]))
-        .map((q) => q.id);
-      const remaining = all.filter((w: { id: number }) => !correctIds.includes(w.id));
-      localStorage.setItem("wrongQuestions", JSON.stringify(remaining));
-    } catch {}
+    // handled server-side now
   }
 
   const handlePracticeWrong = () => {
@@ -321,6 +383,13 @@ export default function QuizDetailPage() {
             </div>
           </div>
         </div>
+        {unlockedTitles.length > 0 && (
+          <AchievementToast
+            titles={unlockedTitles}
+            locale={locale}
+            onDone={() => setUnlockedTitles([])}
+          />
+        )}
       </div>
     );
   }
@@ -348,12 +417,15 @@ export default function QuizDetailPage() {
                (locale === "en" ? "Fill" : "填空")}
             </span>
           </div>
+          {wrongBookIds.has(q.id) && (
+            <div className={s.wrongHintTag}>{locale === "en" ? "You got this wrong before" : "你曾答错过此题"}</div>
+          )}
           <div className={s.questionText}>{q.question}</div>
 
           {q.imageUrls && q.imageUrls.length > 0 && (
             <div className={s.questionImages}>
               {q.imageUrls.map((url, idx) => (
-                <img key={idx} src={url} alt={`question image ${idx + 1}`} className={s.questionImage} />
+                <QuizImage key={`${q.id}-${idx}`} src={url} alt={`question image ${idx + 1}`} />
               ))}
             </div>
           )}
@@ -449,6 +521,14 @@ export default function QuizDetailPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {unlockedTitles.length > 0 && (
+        <AchievementToast
+          titles={unlockedTitles}
+          locale={locale}
+          onDone={() => setUnlockedTitles([])}
+        />
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 @use "@/styles/variables" as *;
 
-.page { padding: 20px; }
+.page { padding: 20px 20px 0; }
 
 .pageCenter {
   display: flex;
@@ -33,15 +33,49 @@
   @media (min-width: $bp-mobile) { padding: 12px 20px; }
 }
 
+// ── PC 双栏主布局 ──
+.mainGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (min-width: $bp-mobile) {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (min-width: $bp-tablet) {
+    grid-template-columns: 1fr 340px;
+  }
+}
+
+.leftCol {
+  min-width: 0;
+}
+
+.rightCol {
+  display: none;
+
+  @media (min-width: $bp-mobile) {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: sticky;
+    top: 20px;
+  }
+}
+
 // ── 轮播 Banner ──
 .banner {
   position: relative;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  height: 140px;
-  margin-bottom: 28px;
-
-  @media (min-width: $bp-mobile) { height: 180px; }
+  width: 100%;
+  padding-top: 33.33%;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .bannerSlide {
@@ -56,34 +90,45 @@
 
 .bannerActive { opacity: 1; }
 
+.bannerImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .bannerText {
   font-size: 20px;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 
   @media (min-width: $bp-mobile) { font-size: 28px; }
 }
 
 .bannerDots {
   position: absolute;
-  bottom: 12px;
+  bottom: 14px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  z-index: 2;
 }
 
 .dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.35);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.25s;
 }
 
-.dotActive { background: #fff; }
+.dotActive {
+  background: #fff;
+  width: 24px;
+  border-radius: 4px;
+}
 
 // ── 4 入口卡片 ──
 .entryGrid {
@@ -93,26 +138,73 @@
 
   @media (min-width: $bp-mobile) {
     grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    gap: 16px;
   }
 }
 
 .entryCard {
   @include panel;
-  padding: 24px 16px;
+  padding: 24px 16px 20px;
   text-align: center;
   cursor: pointer;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--entry-color);
+    opacity: 0.06;
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+  }
 
   &:hover {
-    border-color: rgba(124,58,237,0.45);
-    transform: translateY(-3px);
+    border-color: rgba(124, 58, 237, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+
+    &::before {
+      opacity: 0.12;
+      transform: translateX(-50%) scale(1.5);
+    }
+  }
+}
+
+.entryIconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--entry-color), transparent 70%);
+    opacity: 0.15;
+    pointer-events: none;
   }
 }
 
 .entryIcon {
-  color: $color-brand;
-  margin-bottom: 12px;
+  color: var(--entry-color);
+  position: relative;
+  z-index: 1;
 }
 
 .entryName {
@@ -124,4 +216,396 @@
 .entryDesc {
   font-size: 12px;
   color: $color-faint;
+  line-height: 1.5;
+}
+
+// ── 右栏：个人资料卡 ──
+.profileCard {
+  @include panel;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+}
+
+.profileBg {
+  height: 80px;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.4) 0%, rgba(34, 197, 94, 0.25) 100%);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to top, $color-panel, transparent);
+  }
+}
+
+.profileContent {
+  padding: 0 20px 24px;
+  text-align: center;
+  margin-top: -32px;
+  position: relative;
+  z-index: 1;
+}
+
+.userAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+  span { font-size: 28px; }
+}
+
+.userName {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 18px;
+  padding: 16px 0;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.statItem {
+  flex: 1;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+
+.statUnit {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  margin-left: 1px;
+}
+
+.statLabel {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statDivider {
+  width: 1px;
+  height: 28px;
+  background: rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+// ── 右栏：本周打卡 ──
+.checkinCard {
+  @include panel;
+  padding: 18px;
+}
+
+.checkinHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.checkinTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.checkinFlame {
+  color: $color-warn;
+}
+
+.checkinStreak {
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-warn;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+.checkinGrid {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
+.checkinDay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.checkinDot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  color: transparent;
+  transition: all 0.2s;
+}
+
+.checkinDone {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #22C55E;
+}
+
+.checkinToday {
+  .checkinDot:not(.checkinDone) {
+    border-color: rgba(124, 58, 237, 0.5);
+    border-style: dashed;
+  }
+  .checkinLabel {
+    color: $color-brand;
+    font-weight: 700;
+  }
+}
+
+.checkinLabel {
+  font-size: 11px;
+  color: $color-faint;
+}
+
+// ── 移动端打卡（入口卡片下方，PC端隐藏） ──
+.mobileCheckin {
+  @include panel;
+  padding: 16px;
+  margin-top: 16px;
+
+  @media (min-width: $bp-mobile) { display: none; }
+}
+
+// ── 移动端用户卡片（右栏隐藏时显示） ──
+.mobileUserCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 16px;
+  @include panel;
+
+  @media (min-width: $bp-mobile) { display: none; }
+}
+
+.mobileAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+  span { font-size: 24px; }
+}
+
+.mobileUserInfo { flex: 1; min-width: 0; }
+
+.mobileUserName {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mobileUserStats {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: $color-muted;
+
+  span { white-space: nowrap; }
+}
+
+// ── 今日挑战+排行榜区域 ──
+.meSection {
+  margin-top: 20px;
+
+  @media (min-width: $bp-mobile) {
+    margin-top: 32px;
+  }
+}
+
+// ── 刷题轮次 ──
+.roundSection {
+  margin-top: 20px;
+  padding-bottom: 24px;
+
+  @media (min-width: $bp-mobile) {
+    margin-top: 28px;
+    padding-bottom: 40px;
+  }
+}
+
+.roundSectionHeader {
+  margin-bottom: 16px;
+}
+
+.roundSectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: $color-text;
+}
+
+.roundGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+
+  @media (min-width: $bp-mobile) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+}
+
+.roundCard {
+  @include panel;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+
+  &:hover {
+    border-color: rgba(124, 58, 237, 0.35);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.roundCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.roundIcon {
+  font-size: 24px;
+}
+
+.roundBadge {
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 2px 10px;
+  border: 1px solid;
+}
+
+.roundName {
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-text;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.roundNumbers {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+.roundDone {
+  font-size: 24px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.roundSep {
+  font-size: 14px;
+  color: $color-faint;
+  font-weight: 300;
+}
+
+.roundTotal {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-faint;
+}
+
+.roundProgressBar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.roundProgressFill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.roundFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.roundRemaining {
+  font-size: 12px;
+  color: $color-faint;
+}
+
+.roundContinueBtn {
+  font-size: 12px;
+  font-weight: 600;
+  color: $color-brand;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+
+  &:hover { opacity: 0.75; }
 }

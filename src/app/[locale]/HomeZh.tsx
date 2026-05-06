@@ -78,7 +78,7 @@ export default function HomeZh() {
               <a href="/zh/courses" className={`${s.btn} ${s.btnGreen}`}>在线课程</a>
               <a href="/zh/quiz" className={`${s.btn} ${s.btnGreen}`}>刷题训练</a>
               <a href="/zh/english" className={`${s.btn} ${s.btnGreen}`}>英语学习</a>
-              <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>立即咨询</a>
+              <a href="/zh/login" className={`${s.btn} ${s.btnPrimary}`}>登录</a>
             </nav>
           </div>
         </div>

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import AvatarCropper from "@/components/AvatarCropper";
 import s from "./page.module.scss";
 
 const dict: Record<string, Record<string, string>> = {
@@ -97,6 +98,11 @@ export default function ProfilePage() {
       <main className={s.main}>
         <section className={s.section}>
           <div className={s.userInfo}>
+            <AvatarCropper
+              currentAvatar={user.avatar}
+              locale={locale}
+              onUploaded={(url) => setUser({ ...user, avatar: url })}
+            />
             <div className={s.infoRow}>
               <span className={s.label}>{t.username}:</span>
               <span className={s.value}>{user.username}</span>

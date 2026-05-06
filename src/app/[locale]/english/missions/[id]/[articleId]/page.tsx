@@ -2,7 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { ChevronLeft, Eye, EyeOff, ChevronsDownUp, ChevronsUpDown } from "lucide-react";
+import {
+  ChevronLeft,
+  Play,
+  Pause,
+  Mic,
+  MicOff,
+  Languages,
+  Lightbulb,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import s from "./page.module.scss";
 
 interface Phrase {
@@ -34,23 +44,31 @@ interface ArticleData {
 const dict: Record<string, Record<string, string>> = {
   zh: {
     back: "返回",
-    showPhonetic: "音标",
-    showTranslation: "翻译",
-    showPhrases: "短语",
+    play: "播放",
+    pause: "暂停",
+    followRead: "跟读",
+    recording: "录音中",
+    phonetic: "音标",
+    knowledge: "知识点",
     kk: "KK",
     dj: "DJ",
     ipa: "IPA",
     noSentences: "暂无句子数据",
+    phoneticType: "音标类型",
   },
   en: {
     back: "Back",
-    showPhonetic: "Phonetic",
-    showTranslation: "Translation",
-    showPhrases: "Phrases",
+    play: "Play",
+    pause: "Pause",
+    followRead: "Follow",
+    recording: "Recording",
+    phonetic: "Phonetic",
+    knowledge: "Knowledge",
     kk: "KK",
     dj: "DJ",
     ipa: "IPA",
     noSentences: "No sentence data",
+    phoneticType: "Phonetic type",
   },
 };
 
@@ -62,20 +80,37 @@ export default function ArticleReadPage() {
   const t = dict[locale] || dict.zh;
 
   const [article, setArticle] = useState<ArticleData | null>(null);
-  const [showPhonetic, setShowPhonetic] = useState(false);
   const [phoneticType, setPhoneticType] = useState<"kk" | "dj" | "ipa">("kk");
-  const [showTranslation, setShowTranslation] = useState(false);
-  const [showPhrases, setShowPhrases] = useState(false);
+  const [playingId, setPlayingId] = useState<number | null>(null);
+  const [recordingId, setRecordingId] = useState<number | null>(null);
+  const [phoneticVisible, setPhoneticVisible] = useState<Set<number>>(new Set());
+  const [knowledgeVisible, setKnowledgeVisible] = useState<Set<number>>(new Set());
 
   useEffect(() => {
-    fetch(`/api/english/article-units/${missionId}/articles`)
+    fetch(`/api/english/articles/${articleId}`)
       .then(r => r.json())
-      .then((articles: any[]) => {
-        const a = articles.find((x: any) => String(x.id) === articleId);
-        if (a) setArticle(a);
+      .then((data: ArticleData) => {
+        if (data && data.id) setArticle(data);
       })
       .catch(() => {});
-  }, [missionId, articleId]);
+  }, [articleId]);
+
+  const toggleSet = (set: Set<number>, id: number): Set<number> => {
+    const next = new Set(set);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    return next;
+  };
+
+  const handlePlay = (id: number) => {
+    setRecordingId(null);
+    setPlayingId(prev => (prev === id ? null : id));
+  };
+
+  const handleRecord = (id: number) => {
+    setPlayingId(null);
+    setRecordingId(prev => (prev === id ? null : id));
+  };
 
   if (!article) return <div className={s.page}><div className={s.loading}>Loading...</div></div>;
 
@@ -90,71 +125,100 @@ export default function ArticleReadPage() {
         <h1 className={s.title}>{article.title}</h1>
       </header>
 
-      <div className={s.controls}>
-        <label className={s.control}>
-          <input
-            type="checkbox"
-            checked={showPhonetic}
-            onChange={e => setShowPhonetic(e.target.checked)}
-          />
-          <span>{t.showPhonetic}</span>
-          {showPhonetic && (
-            <select
-              className={s.select}
-              value={phoneticType}
-              onChange={e => setPhoneticType(e.target.value as "kk" | "dj" | "ipa")}
+      <div className={s.globalBar}>
+        <span className={s.globalLabel}>{t.phoneticType}</span>
+        <div className={s.phoneticTabs}>
+          {(["kk", "dj", "ipa"] as const).map(pt => (
+            <button
+              key={pt}
+              className={`${s.phoneticTab} ${phoneticType === pt ? s.activeTab : ""}`}
+              onClick={() => setPhoneticType(pt)}
             >
-              <option value="kk">{t.kk}</option>
-              <option value="dj">{t.dj}</option>
-              <option value="ipa">{t.ipa}</option>
-            </select>
-          )}
-        </label>
-
-        <label className={s.control}>
-          <input
-            type="checkbox"
-            checked={showTranslation}
-            onChange={e => setShowTranslation(e.target.checked)}
-          />
-          <span>{t.showTranslation}</span>
-        </label>
-
-        <button
-          className={`${s.controlBtn} ${showPhrases ? s.active : ""}`}
-          onClick={() => setShowPhrases(!showPhrases)}
-        >
-          {showPhrases ? <ChevronsDownUp size={16} /> : <ChevronsUpDown size={16} />}
-          <span>{t.showPhrases}</span>
-        </button>
+              {t[pt]}
+            </button>
+          ))}
+        </div>
       </div>
 
       <main className={s.main}>
         {sentences.length === 0 && <div className={s.empty}>{t.noSentences}</div>}
-        {sentences.map((sent, i) => (
-          <div key={sent.id || i} className={s.sentenceBlock}>
-            <div className={s.sentenceText}>{sent.text}</div>
-            {showPhonetic && sent[phoneticType] && (
-              <div className={s.phonetic}>{sent[phoneticType]}</div>
-            )}
-            {showTranslation && sent.translation && (
-              <div className={s.translation}>{sent.translation}</div>
-            )}
-            {showPhrases && sent.phrases && sent.phrases.length > 0 && (
-              <div className={s.phrases}>
-                {sent.phrases.map((p, j) => (
-                  <div key={j} className={s.phraseItem}>
-                    <span className={s.phraseText}>{p.text}</span>
-                    <span className={s.phraseTranslation}>{p.translation}</span>
-                    {showPhonetic && p[phoneticType] && (
-                      <span className={s.phrasePhonetic}>{p[phoneticType]}</span>
-                    )}
-                  </div>
-                ))}
+        {sentences.map((sent, i) => {
+          const sid = sent.id || i;
+          const isPlaying = playingId === sid;
+          const isRecording = recordingId === sid;
+          const showPhonetic = phoneticVisible.has(sid);
+          const showKnowledge = knowledgeVisible.has(sid);
+          const hasPhrases = sent.phrases && sent.phrases.length > 0;
+
+          return (
+            <div key={sid} className={s.card}>
+              <div className={s.cardBody}>
+                <span className={s.sentenceNum}>{i + 1}</span>
+                <div className={s.sentenceContent}>
+                  <div className={s.sentenceText}>{sent.text}</div>
+                  {showPhonetic && sent[phoneticType] && (
+                    <div className={s.phonetic}>{sent[phoneticType]}</div>
+                  )}
+                  {sent.translation && (
+                    <div className={s.translation}>{sent.translation}</div>
+                  )}
+                </div>
               </div>
-            )}
-          </div>
-        ))}
+
+              <div className={s.toolbar}>
+                <button
+                  className={`${s.toolBtn} ${isPlaying ? s.toolBtnActive : ""}`}
+                  onClick={() => handlePlay(sid)}
+                >
+                  {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                  <span className={s.toolLabel}>{isPlaying ? t.pause : t.play}</span>
+                </button>
+
+                <button
+                  className={`${s.toolBtn} ${isRecording ? s.toolBtnRecording : ""}`}
+                  onClick={() => handleRecord(sid)}
+                >
+                  {isRecording ? <MicOff size={16} /> : <Mic size={16} />}
+                  <span className={s.toolLabel}>{isRecording ? t.recording : t.followRead}</span>
+                </button>
+
+                <button
+                  className={`${s.toolBtn} ${showPhonetic ? s.toolBtnActive : ""}`}
+                  onClick={() => setPhoneticVisible(prev => toggleSet(prev, sid))}
+                >
+                  <Languages size={16} />
+                  <span className={s.toolLabel}>{t.phonetic}</span>
+                </button>
+
+                {hasPhrases && (
+                  <button
+                    className={`${s.toolBtn} ${showKnowledge ? s.toolBtnActive : ""}`}
+                    onClick={() => setKnowledgeVisible(prev => toggleSet(prev, sid))}
+                  >
+                    <Lightbulb size={16} />
+                    <span className={s.toolLabel}>{t.knowledge}</span>
+                    {showKnowledge ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+                  </button>
+                )}
+              </div>
+
+              {showKnowledge && hasPhrases && (
+                <div className={s.knowledgePanel}>
+                  {sent.phrases.map((p, j) => (
+                    <div key={j} className={s.phraseItem}>
+                      <span className={s.phraseText}>{p.text}</span>
+                      <span className={s.phraseDash}>—</span>
+                      <span className={s.phraseTranslation}>{p.translation}</span>
+                      {p[phoneticType] && (
+                        <span className={s.phrasePhonetic}>{p[phoneticType]}</span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </main>
     </div>
   );

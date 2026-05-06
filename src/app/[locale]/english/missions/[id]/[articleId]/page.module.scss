@@ -16,66 +16,87 @@
 .title { font-size: 20px; font-weight: 700; margin: 0; }
 .loading { text-align: center; padding: 60px 20px; color: $color-faint; }
 
-.controls {
+// ── 全局音标类型选择栏 ──
+.globalBar {
   max-width: 800px;
   margin: 0 auto 20px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding: 12px 16px;
+  gap: 12px;
+  padding: 10px 16px;
   background: $color-panel;
   border: 1px solid $color-border;
   border-radius: 12px;
 }
 
-.control {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.globalLabel {
   font-size: 13px;
   color: $color-muted;
-  cursor: pointer;
-  input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    accent-color: $color-brand;
-  }
+  white-space: nowrap;
 }
 
-.select {
-  margin-left: 4px;
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 6px;
-  border: 1px solid $color-border;
-  background: rgba(0,0,0,0.3);
-  color: $color-text;
-}
-
-.controlBtn {
+.phoneticTabs {
   display: flex;
-  align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+}
+
+.phoneticTab {
+  padding: 4px 14px;
   font-size: 13px;
+  font-weight: 600;
   border-radius: 8px;
-  border: 1px solid $color-border;
+  border: 1px solid transparent;
   background: transparent;
   color: $color-muted;
   cursor: pointer;
   transition: all 0.15s;
   &:hover { background: rgba(255,255,255,0.06); }
-  &.active { color: $color-brand; border-color: rgba(124,58,237,0.4); }
 }
 
-.main { max-width: 800px; margin: 0 auto; }
+.activeTab {
+  color: $color-brand;
+  border-color: rgba(124,58,237,0.4);
+  background: rgba(124,58,237,0.1);
+}
+
+// ── 主内容区 ──
+.main { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
 .empty { text-align: center; padding: 40px 20px; color: $color-faint; font-size: 14px; }
 
-.sentenceBlock {
-  padding: 16px 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  &:last-child { border-bottom: none; }
+// ── 句子卡片 ──
+.card {
+  background: $color-panel;
+  border: 1px solid $color-border;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+  &:hover { border-color: rgba(255,255,255,0.18); }
+}
+
+.cardBody {
+  display: flex;
+  gap: 12px;
+  padding: 18px 20px 14px;
+}
+
+.sentenceNum {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(124,58,237,0.15);
+  color: $color-brand;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.sentenceContent {
+  flex: 1;
+  min-width: 0;
 }
 
 .sentenceText {
@@ -95,29 +116,91 @@
   font-size: 14px;
   color: $color-muted;
   margin-top: 4px;
+  line-height: 1.6;
 }
 
-.phrases {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: rgba(124,58,237,0.06);
+// ── 操作栏 ──
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px 14px;
+  flex-wrap: wrap;
+}
+
+.toolBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
   border-radius: 10px;
+  border: 1px solid $color-border;
+  background: transparent;
+  color: $color-muted;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255,255,255,0.06);
+    color: $color-text;
+  }
+}
+
+.toolBtnActive {
+  color: $color-brand;
+  border-color: rgba(124,58,237,0.4);
+  background: rgba(124,58,237,0.08);
+}
+
+.toolBtnRecording {
+  color: #EF4444;
+  border-color: rgba(239,68,68,0.4);
+  background: rgba(239,68,68,0.08);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.toolLabel {
+  @include mobile {
+    display: none;
+  }
+}
+
+// ── 知识点面板 ──
+.knowledgePanel {
+  margin: 0 16px 16px;
+  padding: 14px 16px;
+  background: rgba(124,58,237,0.06);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .phraseItem {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
+  line-height: 1.6;
 }
 
 .phraseText {
   font-size: 14px;
   font-weight: 600;
   color: $color-text;
+}
+
+.phraseDash {
+  color: $color-faint;
+  font-size: 13px;
 }
 
 .phraseTranslation {

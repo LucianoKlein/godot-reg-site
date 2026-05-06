@@ -1,23 +1,29 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
+import { authFetch } from "@/lib/api";
 import s from "./page.module.scss";
 
-interface WrongQuestion {
+interface WrongItem {
   id: number;
-  categoryId: string;
-  type: string;
-  question: string;
-  options?: string[];
-  correctAnswer: number | number[] | string;
-  explanation: string;
-  imageUrls?: string[];
-  addedAt: string;
+  question_id: number;
+  category_id: string;
+  category_name: string | null;
+  category_icon: string | null;
+  added_at: string;
+  question: {
+    id: number;
+    type: string;
+    question: string;
+    options?: string[];
+    correct_answer: number | number[] | string;
+    explanation: string;
+    image_urls?: string[];
+  } | null;
 }
 
 const dict: Record<string, Record<string, string>> = {
   zh: {
-    back: "← 返回刷题",
     title: "错题本",
     empty: "暂无错题，继续加油！",
     clear: "清空全部",
@@ -29,7 +35,6 @@ const dict: Record<string, Record<string, string>> = {
     fillBlank: "填空",
   },
   en: {
-    back: "← Back to Quiz",
     title: "Wrong Book",
     empty: "No wrong questions yet, keep going!",
     clear: "Clear All",
@@ -48,8 +53,9 @@ export default function WrongBookPage() {
   const locale = (params.locale as string) || "zh";
   const t = dict[locale] || dict.zh;
 
-  const [items, setItems] = useState<WrongQuestion[]>([]);
+  const [items, setItems] = useState<WrongItem[]>([]);
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
@@ -57,31 +63,33 @@ export default function WrongBookPage() {
   }, []);
 
   function loadItems() {
-    try {
-      const raw = JSON.parse(localStorage.getItem("wrongQuestions") || "[]");
-      setItems(Array.isArray(raw) ? raw : []);
-    } catch { setItems([]); }
+    setLoading(true);
+    authFetch("/api/quiz/wrong")
+      .then(r => r.ok ? r.json() : [])
+      .then(data => { setItems(Array.isArray(data) ? data : []); setLoading(false); })
+      .catch(() => { setItems([]); setLoading(false); });
   }
 
-  function handleDelete(id: number) {
-    const next = items.filter((q) => q.id !== id);
-    setItems(next);
-    localStorage.setItem("wrongQuestions", JSON.stringify(next));
+  function handleDelete(questionId: number) {
+    authFetch(`/api/quiz/wrong/${questionId}`, { method: "DELETE" })
+      .then(() => setItems(prev => prev.filter(q => q.question_id !== questionId)))
+      .catch(() => {});
   }
 
   function handleClear() {
-    setItems([]);
-    localStorage.setItem("wrongQuestions", "[]");
+    authFetch("/api/quiz/wrong", { method: "DELETE" })
+      .then(() => setItems([]))
+      .catch(() => {});
   }
 
   function handlePractice() {
     router.push(`/${locale}/quiz/wrong-all?mode=wrong`);
   }
 
-  if (!mounted) return null;
+  if (!mounted || loading) return null;
 
-  const grouped = items.reduce<Record<string, WrongQuestion[]>>((acc, q) => {
-    const key = q.categoryId || "unknown";
+  const grouped = items.reduce<Record<string, WrongItem[]>>((acc, q) => {
+    const key = q.category_id || "unknown";
     if (!acc[key]) acc[key] = [];
     acc[key].push(q);
     return acc;
@@ -103,23 +111,28 @@ export default function WrongBookPage() {
           <p className={s.empty}>{t.empty}</p>
         ) : (
           <>
-            {Object.entries(grouped).map(([catId, questions]) => (
+            {Object.entries(grouped).map(([catId, questions]) => {
+              const first = questions[0];
+              const icon = first?.category_icon || "📋";
+              const name = first?.category_name || catId;
+              return (
               <div key={catId} className={s.group}>
-                <div className={s.groupTitle}>{catId} ({questions.length})</div>
+                <div className={s.groupTitle}><span>{icon}</span> {name} ({questions.length})</div>
                 <div className={s.list}>
                   {questions.map((q) => (
                     <div key={q.id} className={s.item}>
-                      <span className={s.itemType}>{typeLabel(q.type)}</span>
+                      <span className={s.itemType}>{typeLabel(q.question?.type || "")}</span>
                       <div className={s.itemBody}>
-                        <div className={s.itemQuestion}>{q.question}</div>
-                        <div className={s.itemMeta}>{new Date(q.addedAt).toLocaleDateString()}</div>
+                        <div className={s.itemQuestion}>{q.question?.question || ""}</div>
+                        <div className={s.itemMeta}>{q.added_at ? new Date(q.added_at).toLocaleString() : ""}</div>
                       </div>
-                      <button className={s.deleteBtn} onClick={() => handleDelete(q.id)}>{t.delete}</button>
+                      <button className={s.deleteBtn} onClick={() => handleDelete(q.question_id)}>{t.delete}</button>
                     </div>
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
             <button className={s.practiceBtn} onClick={handlePractice}>{t.practice}</button>
           </>
         )}

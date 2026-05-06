@@ -77,7 +77,7 @@ export default function HomeEn() {
               <a href="/en/courses" className={`${s.btn} ${s.btnGreen}`}>Courses</a>
               <a href="/en/quiz" className={`${s.btn} ${s.btnGreen}`}>Quiz</a>
               <a href="/en/english" className={`${s.btn} ${s.btnGreen}`}>English</a>
-              <a href="#consult" className={`${s.btn} ${s.btnPrimary}`}>Contact Us</a>
+              <a href="/en/login" className={`${s.btn} ${s.btnPrimary}`}>Login</a>
             </nav>
           </div>
         </div>
