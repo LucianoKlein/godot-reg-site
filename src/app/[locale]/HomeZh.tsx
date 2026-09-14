@@ -34,7 +34,7 @@ const STEPS = [
 const JSONLD_ORG = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
-  name: "Aiden 实战训练",
+  name: "Result Education Group",
   description: "系统化荷官岗位培训：扑克、百家乐、骰子等课程，含视频录播、笔记讲义与模拟练习。",
   url: typeof window !== "undefined" ? window.location.origin : "",
 };
@@ -48,7 +48,7 @@ const JSONLD_COURSES = {
     item: {
       "@type": "Course",
       name: c.name,
-      provider: { "@type": "Organization", name: "Aiden 实战训练" },
+      provider: { "@type": "Organization", name: "Result Education Group" },
       instructor: { "@type": "Person", name: c.instructor },
     },
   })),
@@ -63,10 +63,10 @@ export default function HomeZh() {
       <header className={s.nav}>
         <div className={s.container}>
           <div className={s.navInner}>
-            <a href="/zh" className={s.logo} aria-label="Aiden 实战训练 - 首页">
+            <a href="/zh" className={s.logo} aria-label="Result Education Group - 首页">
               <div className={s.logoMark} aria-hidden="true" />
               <div>
-                <div className={s.logoTitle}>Aiden 实战训练</div>
+                <div className={s.logoTitle}>Result Education Group</div>
                 <div className={s.logoSub}>不玩套路，只做结果导向</div>
               </div>
             </a>
@@ -139,8 +139,8 @@ export default function HomeZh() {
                     <p className={s.miniDesc}>报名后立即签订正规合同，流程透明、条款清晰，按约履行服务内容。</p>
                   </div>
                   <div className={s.warnCard}>
-                    <p className={s.miniTitle} style={{ color: "rgba(255,255,255,0.92)" }}>提醒（重要）</p>
-                    <p className={s.miniDesc}>"保送/承诺"等表述以实际签署合同条款为准；个体结果受基础、投入与岗位需求影响。</p>
+                    <p className={s.miniTitle}>重要声明</p>
+                    <p className={s.miniDesc}>根据内华达州法规要求，本机构不提供就业保证承诺。我们提供全面的培训与就业支持服务，并保持业内领先的学员成功就业率。最终结果取决于个人资质、学习投入、市场环境及雇主要求等多重因素。</p>
                   </div>
                 </div>
               </aside>
@@ -284,7 +284,7 @@ export default function HomeZh() {
           <div className={s.container}>
             <div className={s.footerInner}>
               <div>
-                <div className={s.footerBrand}>Aiden 实战训练</div>
+                <div className={s.footerBrand}>Result Education Group LLC</div>
                 <div className={s.footerCopy}>© {new Date().getFullYear()} All rights reserved.</div>
               </div>
               <div className={s.footerRight}>

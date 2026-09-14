@@ -9,23 +9,23 @@ const POPULAR_COURSES = [
 ];
 
 const FAQ_ITEMS = [
-  { q: "How can interview questions match the course content so closely?", a: "We break down common job requirements and workflows into a training question bank and operational standards, and use simulated practice to help you build reusable problem-solving and operational frameworks." },
+  { q: "How can audition questions match the course content so closely?", a: "We break down common job requirements and workflows into a training question bank and operational standards, and use simulated practice to help you build reusable problem-solving and operational frameworks." },
   { q: "Do you really sign a contract immediately after enrollment?", a: "Yes, a formal contract is signed specifying the scope of services, process, and terms. The actual contract you sign shall prevail." },
-  { q: "What exactly does 'job placement support' include?", a: "It typically includes training plans, resume optimization advice, mock interviews, and process support. Details vary by plan — contact us for the specific checklist." },
+  { q: "What exactly does 'job placement support' include?", a: "It typically includes training plans, resume optimization advice, mock auditions, and process support. Details vary by plan — contact us for the specific checklist." },
   { q: "Can I learn with zero experience? How long does it take?", a: "Absolutely — you can start from scratch, but you need to commit to the practice schedule. The timeline depends on your background, effort, and job availability." },
 ];
 
 const FEATURES = [
   { t: "Simulation Software Practice", d: "Job-level simulations at the core, making training as close to real work as possible. You learn not just theory, but hands-on skills." },
-  { t: "Job Placement Support (Full Journey)", d: "From courses to job search, we provide systematic support: resume prep, interview coaching, process guidance, and more (details per contract)." },
+  { t: "Job Placement Support (Full Journey)", d: "From courses to job search, we provide systematic support: resume prep, audition coaching, process guidance, and more (details per contract)." },
   { t: "60+ Course Library (Comprehensive Coverage)", d: "Courses and training form a closed loop: learn — practice — test — review — practice again, until you can deliver consistently." },
   { t: "Transparent Guarantee: Contract Upon Enrollment", d: "Clear terms, defined boundaries, no verbal promises. You just focus on your effort — everything else proceeds as agreed." },
   { t: "Flexible Scheduling: Fits Your Pace", d: "We adjust the training rhythm to your situation, so you can sustain effective practice at a manageable intensity." },
-  { t: "Results-Oriented: Every Practice Prepares You for the Interview", d: "We break interview questions and job skills into a training checklist: you know what to practice, to what standard, and how to verify." },
+  { t: "Results-Oriented: Every Practice Prepares You for the Audition", d: "We break audition questions and job skills into a training checklist: you know what to practice, to what standard, and how to verify." },
 ];
 
 const STEPS = [
-  { title: "Align Goals: Map Out Job Competencies", text: "Clarify what the job requires, what the interview tests, and how you'll be evaluated on-site — then turn it into an actionable training plan." },
+  { title: "Align Goals: Map Out Job Competencies", text: "Clarify what the job requires, what the audition tests, and how you'll be evaluated on-site — then turn it into an actionable training plan." },
   { title: "Break Down Actions: Questions → Steps → Model Answers", text: "We don't just give conclusions — we provide the reasoning path and replicable operational procedures." },
   { title: "High-Frequency Drills: Repeat Until Consistent", text: "Use simulated practice to master key steps and build stable output: know how, do it right, do it fast." },
   { title: "Review & Iterate: Accelerate Through Mistakes", text: "Target weak spots for focused improvement, avoid ineffective grinding, and shorten the gap from learning to employment." },
@@ -34,7 +34,7 @@ const STEPS = [
 const JSONLD_ORG = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
-  name: "Aiden Practical Training",
+  name: "Result Education Group",
   description: "Systematic dealer training: poker, baccarat, dice courses with video lessons, study notes, and simulation practice.",
   url: typeof window !== "undefined" ? window.location.origin : "",
 };
@@ -48,7 +48,7 @@ const JSONLD_COURSES = {
     item: {
       "@type": "Course",
       name: c.name,
-      provider: { "@type": "Organization", name: "Aiden Practical Training" },
+      provider: { "@type": "Organization", name: "Result Education Group" },
       instructor: { "@type": "Person", name: c.instructor },
     },
   })),
@@ -62,10 +62,10 @@ export default function HomeEn() {
       <header className={s.nav}>
         <div className={s.container}>
           <div className={s.navInner}>
-            <a href="/en" className={s.logo} aria-label="Aiden Practical Training - Home">
+            <a href="/en" className={s.logo} aria-label="Result Education Group - Home">
               <div className={s.logoMark} aria-hidden="true" />
               <div>
-                <div className={s.logoTitle}>Aiden Practical Training</div>
+                <div className={s.logoTitle}>Result Education Group</div>
                 <div className={s.logoSub}>No Gimmicks, Only Results</div>
               </div>
             </a>
@@ -91,13 +91,13 @@ export default function HomeEn() {
                 <div className={s.badgeRow}>
                   <span className={`${s.badge} ${s.badgeBrand}`}>No Gimmicks</span>
                   <span className={`${s.badge} ${s.badgeGreen}`}>Practice-Oriented</span>
-                  <span className={s.badge}>Interview-Aligned</span>
+                  <span className={s.badge}>Audition-Aligned</span>
                   <span className={s.badge}>Full Support</span>
                 </div>
                 <h1 className={s.h1}>Only Real Skills<br />and Real Results</h1>
                 <p className={s.lead}>
                   We don&apos;t do fancy packaging — every lesson and drill is directly aligned with real job requirements.
-                  The goal is clear: equip you with <strong>reusable, practical skills</strong> to ace the interview and land the job.
+                  The goal is clear: equip you with <strong>reusable, practical skills</strong> to ace the audition and land the job.
                 </p>
                 <div className={s.heroActions}>
                   <a href="/en/courses" className={`${s.btn} ${s.btnGreen}`}>Try Courses Free</a>
@@ -109,7 +109,7 @@ export default function HomeEn() {
                   <div className={s.miniCard}>
                     <p className={s.miniTitle}>Student Feedback Keyword</p>
                     <div className={s.miniBig}>Practical</div>
-                    <p className={s.miniDesc}>Interview questions closely match classroom exercises — stay calm, think clearly, deliver to standard.</p>
+                    <p className={s.miniDesc}>Audition questions closely match classroom exercises — stay calm, think clearly, deliver to standard.</p>
                   </div>
                   <div className={s.miniCard}>
                     <p className={s.miniTitle}>Core of Training</p>
@@ -123,7 +123,7 @@ export default function HomeEn() {
                   <div className={s.miniCard}>
                     <p className={s.miniTitle}>Real Case</p>
                     <div className={s.miniBig} style={{ fontSize: 20 }}>Sandy Received Venetian Offer</div>
-                    <p className={s.miniDesc}>From interview to job offer, her feedback in one word: <strong>Practical</strong>.</p>
+                    <p className={s.miniDesc}>From audition to job offer, her feedback in one word: <strong>Practical</strong>.</p>
                   </div>
                   <div className={s.miniCard}>
                     <p className={s.miniTitle}>Training Support</p>
@@ -136,8 +136,8 @@ export default function HomeEn() {
                     <p className={s.miniDesc}>A formal contract is signed immediately after enrollment — transparent process, clear terms, services delivered as agreed.</p>
                   </div>
                   <div className={s.warnCard}>
-                    <p className={s.miniTitle} style={{ color: "rgba(255,255,255,0.92)" }}>Important Notice</p>
-                    <p className={s.miniDesc}>Claims such as &quot;guaranteed placement&quot; are subject to the actual contract terms; individual results depend on background, effort, and job availability.</p>
+                    <p className={s.miniTitle}>Important Notice</p>
+                    <p className={s.miniDesc}>In compliance with Nevada state regulations, we do not guarantee job placement. We provide comprehensive training and support services with a demonstrated track record of high student success rates. Outcomes vary based on individual qualifications, dedication, market conditions, and employer requirements.</p>
                   </div>
                 </div>
               </aside>
@@ -190,7 +190,7 @@ export default function HomeEn() {
                 ))}
               </div>
               <div className={s.quote}>
-                <p className={s.quoteText}>&quot;On the surface, Aiden is running a training program, but underneath he&apos;s connecting learning methods, practice systems, and interview strategies. Under this system, newcomers achieve results that even experienced people may not get.&quot;</p>
+                <p className={s.quoteText}>&quot;On the surface, Aiden is running a training program, but underneath he&apos;s connecting learning methods, practice systems, and audition strategies. Under this system, newcomers achieve results that even experienced people may not get.&quot;</p>
                 <div className={s.quoteMeta}><span>Student Testimonial Summary</span><span>Keywords: Systematic · Practical</span></div>
               </div>
             </div>
@@ -203,14 +203,14 @@ export default function HomeEn() {
             <div className={s.sectionHeader}>
               <div>
                 <h2 className={s.h2}>Real Case Studies</h2>
-                <p className={s.sub}>Let results and process speak: from &quot;how to practice&quot; to &quot;how to answer&quot; — breaking interviews down into trainable actions.</p>
+                <p className={s.sub}>Let results and process speak: from &quot;how to practice&quot; to &quot;how to answer&quot; — breaking auditions down into trainable actions.</p>
               </div>
               <a href="#consult" className={s.btn}>Get the Same Training Path</a>
             </div>
             <div className={s.grid2}>
               <div className={s.quote}>
-                <p className={s.quoteText}>&quot;During the interview, I realized the questions were exactly what you covered and had us practice in class! I wasn&apos;t nervous at all!&quot;</p>
-                <div className={s.quoteMeta}><span>Student Feedback</span><span>Interview-Aligned · Reproducible</span></div>
+                <p className={s.quoteText}>&quot;During the audition, I realized the questions were exactly what you covered and had us practice in class! I wasn&apos;t nervous at all!&quot;</p>
+                <div className={s.quoteMeta}><span>Student Feedback</span><span>Audition-Aligned · Reproducible</span></div>
               </div>
               <div className={s.quote}>
                 <p className={s.quoteText}>&quot;I believe Aiden is someone who delivers real results — no other school has this kind of capability!&quot;</p>
@@ -281,7 +281,7 @@ export default function HomeEn() {
           <div className={s.container}>
             <div className={s.footerInner}>
               <div>
-                <div className={s.footerBrand}>Aiden Practical Training</div>
+                <div className={s.footerBrand}>Result Education Group LLC</div>
                 <div className={s.footerCopy}>© {new Date().getFullYear()} All rights reserved.</div>
               </div>
               <div className={s.footerRight}>

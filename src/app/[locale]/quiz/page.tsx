@@ -31,7 +31,7 @@ const dict: Record<string, Record<string, string>> = {
     back: "← Back to Home",
     banner1: "Daily practice, stay sharp",
     banner2: "Review mistakes, turn weakness into strength",
-    banner3: "Simulate real exams, ace the interview",
+    banner3: "Simulate real exams, ace the audition",
     category: "By Category",
     categoryDesc: "Focus on specific topics",
     byType: "By Type",
