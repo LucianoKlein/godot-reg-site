@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import s from "./page.module.scss";
 
 const POPULAR_COURSES = [
@@ -55,10 +56,38 @@ const JSONLD_COURSES = {
 };
 
 export default function HomeEn() {
+  const [showNotice, setShowNotice] = useState(true);
+
   return (
     <div className={s.page}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD_ORG) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSONLD_COURSES) }} />
+
+      {/* Notice Modal */}
+      {showNotice && (
+        <div className={s.modalOverlay} onClick={() => setShowNotice(false)}>
+          <div className={s.modalContent} onClick={(e) => e.stopPropagation()}>
+            <h2 className={s.modalTitle}>Important Notice</h2>
+            <p className={s.modalText}>
+              REG Dealing School is temporarily closed. Students recruitment and training are paused.
+            </p>
+            <p className={s.modalText}>
+              If you have any questions, please email{" "}
+              <a href="mailto:aidenhe@resulteducationgroup.com" className={s.modalLink}>
+                aidenhe@resulteducationgroup.com
+              </a>{" "}
+              or Text{" "}
+              <a href="sms:669-265-7966" className={s.modalLink}>
+                669-265-7966
+              </a>.
+            </p>
+            <button onClick={() => setShowNotice(false)} className={s.modalBtn}>
+              Got it
+            </button>
+          </div>
+        </div>
+      )}
+
       <header className={s.nav}>
         <div className={s.container}>
           <div className={s.navInner}>
